@@ -1,7 +1,7 @@
-import { useAuth } from "../../context/AuthContext";
+import { useAuthContext } from "../../context/auth/AuthContext";
 
 export default function Dashboard() {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuthContext();
 
   return (
     <div className="min-h-screen flex items-center justify-center">
