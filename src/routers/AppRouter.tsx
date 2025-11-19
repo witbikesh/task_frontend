@@ -5,6 +5,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Register from "../pages/auth/Register";
 import GuestRoute from "./GuestRoute";
+import { TaskProvider } from "../context/TaskContext";
 
 export default function AppRouter() {
   return (
@@ -41,7 +42,9 @@ export default function AppRouter() {
           path="/"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <TaskProvider>
+                <Dashboard />
+              </TaskProvider>
             </ProtectedRoute>
           }
         />

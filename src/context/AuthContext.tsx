@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from "react";
-import type { ILoginPayload, IRegisterPayload, IUser } from "../../interface";
-import axiosInstance from "../../helpers/axios.instance";
-import { AUTH_ENDPOINTS } from "../../constants";
-import { showError, showSuccess } from "../../helpers/toast";
+import type { ILoginPayload, IRegisterPayload, IUser } from "../interface";
+import axiosInstance from "../helpers/axios.instance";
+import { AUTH_ENDPOINTS } from "../constants";
+import { showError, showSuccess } from "../helpers/toast";
 
 interface AuthContextType {
   isAuthenticated: boolean;

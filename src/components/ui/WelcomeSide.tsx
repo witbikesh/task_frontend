@@ -31,7 +31,9 @@ const WelcomeSide: React.FC = () => {
       </ul>
 
       <div className="mt-6 text-xs opacity-90">
-        Demo account: admin@admin.com / password@123
+        Demo account:
+        <p>alice@example.com / Password@123</p>
+        <p>bob@example.com / Password@123</p>
       </div>
     </div>
   );

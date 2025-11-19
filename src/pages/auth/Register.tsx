@@ -4,7 +4,7 @@ import * as Yup from "yup";
 
 import { FormikInput } from "../../components/formik";
 import { Button } from "../../components/ui";
-import { useAuthContext } from "../../context/auth/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 import type { IRegisterPayload } from "../../interface";
 
 const Register = () => {

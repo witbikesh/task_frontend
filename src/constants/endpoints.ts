@@ -3,4 +3,4 @@ export const AUTH_ENDPOINTS = {
   REGISTER: "/api/auth/register",
 };
 
-export const TASK_ENDPOINTS = {};
+export const TASK_ENDPOINTS = "/api/task";

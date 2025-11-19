@@ -5,7 +5,7 @@ import * as Yup from "yup";
 
 import { FormikInput } from "../../components/formik";
 import { Button, WelcomeSide } from "../../components/ui";
-import { useAuthContext } from "../../context/auth/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 import type { ILoginPayload } from "../../interface";
 
 const Login: React.FC = () => {
@@ -22,7 +22,6 @@ const Login: React.FC = () => {
   });
   const handleLogin = async (values: ILoginPayload) => {
     const success = await login(values);
-    console.log("success", success);
     if (success) navigate("/");
   };
 
