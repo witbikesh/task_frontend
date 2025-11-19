@@ -1,12 +1,17 @@
+import { Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { Button, Input } from "../../components/ui";
-import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+
+import { FormikInput } from "../../components/formik";
+import { Button } from "../../components/ui";
+import { useAuthContext } from "../../context/auth/AuthContext";
+import type { IRegisterPayload } from "../../interface";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { loading, register } = useAuthContext();
 
-  const initialValues = {
+  const initialValues: IRegisterPayload = {
     name: "",
     email: "",
     password: "",
@@ -27,9 +32,9 @@ const Register = () => {
       ),
   });
 
-  const handleSubmit = (values: typeof initialValues) => {
-    // Handle registration logic here
-    console.log("Registering user:", values);
+  const handleSubmit = async (values: IRegisterPayload) => {
+    const success = await register(values);
+    if (success) navigate("/");
   };
 
   return (
@@ -45,55 +50,27 @@ const Register = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {() => (
+            {({ isSubmitting }) => (
               <Form className="space-y-5">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Name
-                  </label>
-                  <Field as={Input} name="name" placeholder="Your name" />
-                  <ErrorMessage
-                    name="name"
-                    component="div"
-                    className="text-red-500 text-xs mt-1"
-                  />
-                </div>
+                <FormikInput name="name" label="Name" placeholder="Your name" />
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Email
-                  </label>
-                  <Field
-                    as={Input}
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                  />
-                  <ErrorMessage
-                    name="email"
-                    component="div"
-                    className="text-red-500 text-xs mt-1"
-                  />
-                </div>
+                <FormikInput
+                  name="email"
+                  label="Email"
+                  type="email"
+                  placeholder="you@example.com"
+                />
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Password
-                  </label>
-                  <Field
-                    as={Input}
-                    name="password"
-                    type="password"
-                    placeholder="Enter your password"
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="div"
-                    className="text-red-500 text-xs mt-1"
-                  />
-                </div>
+                <FormikInput
+                  name="password"
+                  label="Password"
+                  type="password"
+                  placeholder="Enter your password"
+                />
 
-                <Button type="submit">Register</Button>
+                <Button type="submit" disabled={isSubmitting || loading}>
+                  Register
+                </Button>
               </Form>
             )}
           </Formik>

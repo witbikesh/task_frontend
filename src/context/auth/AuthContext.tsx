@@ -9,7 +9,7 @@ interface AuthContextType {
   user: IUser | null;
   loading: boolean;
   login: (payload: ILoginPayload) => Promise<boolean>;
-  register: (payload: IRegisterPayload) => Promise<void>;
+  register: (payload: IRegisterPayload) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -30,22 +30,45 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
       setLoading(true);
 
       const res = await axiosInstance.post(AUTH_ENDPOINTS.LOGIN, payload);
-      console.log("res", res);
+
       localStorage.setItem("access_token", res?.data?.data?.accessToken);
+      localStorage.setItem("user", JSON.stringify(res?.data?.data?.user));
       setIsAuthenticated(true);
       showSuccess(res?.data?.message);
       return true;
     } catch (error: any) {
-      showError(error?.response?.data?.message);
+      showError(
+        error?.response?.data?.message || "Something went wrong during login"
+      );
       return false;
     } finally {
       setLoading(false);
     }
   };
 
-  const register = async (payload: IRegisterPayload) => setUser(null);
+  const register = async (payload: IRegisterPayload) => {
+    try {
+      setLoading(true);
 
-  const logout = () => setUser(null);
+      const res = await axiosInstance.post(AUTH_ENDPOINTS.REGISTER, payload);
+
+      showSuccess(res?.data?.message);
+      return true;
+    } catch (error: any) {
+      showError(
+        error?.response?.data?.message || "Something went wrong during signup"
+      );
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    setUser(null);
+    setIsAuthenticated(false);
+  };
 
   return (
     <AuthContext.Provider
